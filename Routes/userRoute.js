@@ -1,0 +1,47 @@
+const express = require("express")
+const router = express.Router()
+const USER = require('../Models/User')
+
+router.post('/signup', async (req, res) => {
+    const { userName, email, password } = req.body;
+
+    try {
+        const existingUser = await USER.findOne({ email })
+        if (existingUser) {
+            return res.status(400).json({ error: "user already existed" })
+        }
+
+        const userData = await USER.create({
+            userName, email, password
+        })
+        console.log(userData)
+        return res.status(200).json({ message: "user created successfully", userData })
+    } catch (error) {
+        console.error("error in signup", error)
+        return res.status(500).json({ error: "internal server error" })
+    }
+})
+
+router.post("/login", async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        // Find the user by email
+        const user = await USER.findOne({ email });
+
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+        // Check password
+        if (user.password !== password) {
+            return res.status(401).json({ error: "Invalid credentials" });
+        }
+        // Login successful
+        res.status(200).json({ message: "User logged in successfully" });
+    } catch (error) {
+        console.error("Login error", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
+module.exports = router;
