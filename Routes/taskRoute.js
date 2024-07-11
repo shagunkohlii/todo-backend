@@ -111,6 +111,19 @@ router.put('/updateTask', fetchUser, async (req, res) => {
     }
 });
 
+router.get('/getTasks', fetchUser, async (req, res) => {
+    const userId = req.user._id; // Assuming fetchUser middleware adds user to req
+
+    try {
+        // Fetch tasks for the authenticated user
+        const tasks = await TASK.find({ user: userId });
+
+        res.status(200).json(tasks);
+    } catch (err) {
+        console.error('Error fetching tasks:', err);
+        res.status(500).json({ message: 'Error fetching tasks', error: err.message });
+    }
+});
 
 
 module.exports = router;
