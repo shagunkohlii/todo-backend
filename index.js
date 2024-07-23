@@ -14,7 +14,7 @@ mongoConnect()
 // middlewares
 app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors({ origin: ['http://localhost:3000', 'https://shagunkohli-todo.vercel.app/'], methods: ["GET", "POST","DELETE","PUT"] }))
+app.use(cors({ origin: ['http://localhost:3000', 'https://shagunkohli-todo.vercel.app'], methods: ["GET", "POST", "DELETE", "PUT"], credentials: true }))
 app.use(checkForAuthenticationHeader("token"));
 app.use(cookieParser())
 app.use(bodyParser.json());
