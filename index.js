@@ -5,7 +5,7 @@ const userRoute = require('./Routes/userRoute')
 const bodyParser = require("body-parser")
 const { checkForAuthenticationHeader } = require("./middlewares/auth");
 const cookieParser = require("cookie-parser");
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 const taskRoute = require("./Routes/taskRoute")
 // db connection
 const mongoConnect = require('./db');
@@ -14,7 +14,7 @@ mongoConnect()
 // middlewares
 app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors())
+app.use(cors({ origin: ['http://localhost:3000', 'https://shagunkohli-todo.vercel.app/'], methods: ["GET", "POST","DELETE","PUT"] }))
 app.use(checkForAuthenticationHeader("token"));
 app.use(cookieParser())
 app.use(bodyParser.json());
