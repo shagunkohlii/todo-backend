@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 // route api
 app.use("/api/user", userRoute)
 app.use("/api/task", taskRoute)
-// app.user("/api/user/home", todoRoute)
+
 
 // server
 app.listen(PORT, () => {

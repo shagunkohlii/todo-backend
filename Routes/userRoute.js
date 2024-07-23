@@ -28,6 +28,7 @@ router.post("/login", async (req, res) => {
     try {
         const token = await USER.matchPasswordAndGenerateToken(email, password);
         console.log("token", token);
+
         return res.json({ success: true, token });
 
     } catch (error) {

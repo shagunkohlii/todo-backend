@@ -7,7 +7,7 @@ const { fetchUser } = require('../middlewares/auth');
 
 router.post('/addTask', fetchUser, async (req, res) => {
     const { taskName, description } = req.body;
-    const userId = req.user._id; // Assuming fetchUser middleware adds user to req
+    const userId = req.user._id;
 
     try {
         // Create the new task
@@ -37,7 +37,7 @@ router.post('/addTask', fetchUser, async (req, res) => {
 
 router.delete('/deleteTask', fetchUser, async (req, res) => {
     const { taskId } = req.body;
-    const userId = req.user._id; // Assuming fetchUser middleware adds user to req
+    const userId = req.user._id;
 
     // Validate taskId
     if (!taskId || !mongoose.Types.ObjectId.isValid(taskId)) {
@@ -72,14 +72,13 @@ router.delete('/deleteTask', fetchUser, async (req, res) => {
 
 router.put('/updateTask', fetchUser, async (req, res) => {
     const { taskId, taskName, description } = req.body;
-    const userId = req.user._id; // Assuming fetchUser middleware adds user to req
+    const userId = req.user._id; 
 
     // Validate taskId
     if (!taskId || !mongoose.Types.ObjectId.isValid(taskId)) {
         return res.status(400).json({ message: 'Invalid or missing task ID' });
     }
 
-    // Check if at least one field to update is provided
     if (!taskName && !description) {
         return res.status(400).json({ message: 'Please provide taskName or description to update' });
     }
@@ -112,7 +111,7 @@ router.put('/updateTask', fetchUser, async (req, res) => {
 });
 
 router.get('/getTasks', fetchUser, async (req, res) => {
-    const userId = req.user._id; // Assuming fetchUser middleware adds user to req
+    const userId = req.user._id;
 
     try {
         // Fetch tasks for the authenticated user
